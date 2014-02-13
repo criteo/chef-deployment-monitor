@@ -115,6 +115,7 @@ On all your frontend servers:
 
 On your monitor server:
 
-    chef-worker run -- -C /opt/chef-monitor/config.rb     #<run interactive>
-    chef-worker start -- -C /opt/chef-monitor/config.rb   #<run as service>
-    chef-worker stop                                      #<stop service>
+    chef-worker run -- -C /opt/chef-monitor/config.rb             #<run interactive>
+    chef-worker start -- -C /opt/chef-monitor/config.rb           #<run as service>
+    chef-worker stop                                              #<stop service>
+    chef-worker run -- -C /opt/chef-monitor/config.rb -O my_org  #<populates the repo: my_org for the first time>
