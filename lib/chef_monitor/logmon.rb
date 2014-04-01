@@ -32,7 +32,8 @@ class Monitor
           mon.backward(1)
           mon.tail { |line|
             data = scan(line)
-            unless data.nil? || data['org'].nil?
+            # skipping the objects 'checksum-.*' and 'reports'
+            unless data.nil? || data['org'].nil? || data['object'] =~  /(^checksum-.*$|^reports$)/
               Monitor::Log.new(data, "INFO")
               q.publish(data, :persistent => true, :content_type => "application/json")
             end
