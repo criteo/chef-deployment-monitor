@@ -19,12 +19,9 @@ class Monitor
   class Logmon
 
     def run
-      conn = Bunny.new(:hostname => MQSERVER)
-      conn.start
 
-      ch = conn.create_channel
-      q  = ch.queue(MQQUEUE, :durable => true)
-
+      sink = RmqSink.new
+      
       begin
         File.open(MON_FILE) do |mon|
           mon.extend(File::Tail)
@@ -34,8 +31,10 @@ class Monitor
             data = scan(line)
             # skipping the objects 'checksum-.*' and 'reports'
             unless data.nil? || data['org'].nil? || data['object'] =~  /(^checksum-.*$|^reports$)/
-              Monitor::Log.new(data.to_json, "INFO") unless filter(data)
-              q.publish(data, :persistent => true, :content_type => "application/json")
+              unless filter(data)
+                Monitor::Log.new(data.to_json, "INFO")
+                sink.receive(data)
+              end
             end
           }
         end

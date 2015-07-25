@@ -17,4 +17,5 @@
 
 require "chef_monitor/log"
 require "chef_monitor/config"
+require "chef_monitor/sinks"
 require "chef_monitor/logmon"
