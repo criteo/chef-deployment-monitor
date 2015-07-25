@@ -20,7 +20,7 @@ class Monitor
 
     def run
 
-      sink = RmqSink.new
+      sink = MarkerFileSink.new
       
       begin
         File.open(MON_FILE) do |mon|

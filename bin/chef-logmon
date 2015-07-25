@@ -39,7 +39,7 @@ if config.nil?
   exit 1
 else
   Monitor::Config.from_file(config)
-  [ "mq_queue", "mq_server", "mon_file", "chef_url", "pid_dir", "log_dir" ].each do |item|
+  [ "mon_file", "chef_url", "pid_dir", "log_dir" ].each do |item|
     if Monitor::Config[item.to_sym].empty?
       puts "Missing item: #{item} within the configuration file!"
       exit 1
