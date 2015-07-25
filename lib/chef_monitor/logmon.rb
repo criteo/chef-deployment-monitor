@@ -34,12 +34,16 @@ class Monitor
             data = scan(line)
             # skipping the objects 'checksum-.*' and 'reports'
             unless data.nil? || data['org'].nil? || data['object'] =~  /(^checksum-.*$|^reports$)/
-              Monitor::Log.new(data, "INFO")
+              Monitor::Log.new(data.to_json, "INFO") unless filter(data)
               q.publish(data, :persistent => true, :content_type => "application/json")
             end
           }
         end
       end
+    end
+
+    def filter(data)
+      USER_BLACKLIST && (data['user'] =~ USER_BLACKLIST)
     end
 
     def scan(line)
@@ -54,7 +58,7 @@ class Monitor
         data['name']    = $5.split('/')[4] unless $5.split('/')[4].nil?
         data['version'] = $5.split('/')[5] unless $5.split('/')[5].nil?
         data['action']  = $4
-        return data.to_json
+        return data
       end
       return nil
     end
