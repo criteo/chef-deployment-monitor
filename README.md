@@ -10,8 +10,6 @@ chefserver in a more basic environment and is responsible for the following task
   
   - Tail your NGINX log and record all POST/PUTS/DELETES  
   
-Basically every change that's being made to chef is registered within RabbitMQ.  
-  
 #CONFIGURATION:
 
 In order to execute both tools, you will need the following configuration settings:
