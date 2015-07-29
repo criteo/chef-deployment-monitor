@@ -49,9 +49,6 @@ end
 
 ALLOWED_OBJECTS = ['users', 'cookbooks','roles','environments','clients','nodes','groups','data']
 DOWNLOAD_PATH   = Monitor::Config[:download_path]
-MQSERVER        = Monitor::Config[:mq_server]
-MQQUEUE         = Monitor::Config[:mq_queue]
-CHEF_URL        = Monitor::Config[:chef_url]
 DEBUG           = debug
 Chef::Config[:node_name]  = Monitor::Config[:node_name]
 Chef::Config[:client_key] = Monitor::Config[:client_key]
@@ -64,7 +61,7 @@ Chef::Config[:client_key] = Monitor::Config[:client_key]
 }
 
 unless populate.nil?
-  Chef::Config[:chef_server_url] = CHEF_URL + "/organizations/#{populate}"
+  Chef::Config[:chef_server_url] = Monitor::Config[:chef_url] + "/organizations/#{populate}"
   ALLOWED_OBJECTS.each do |object|
     data = {}
     data['object'] = object

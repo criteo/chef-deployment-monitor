@@ -18,11 +18,11 @@
 class Monitor
   class Worker
     def run
-      conn = Bunny.new(:hostname => MQSERVER)
+      conn = Bunny.new(:hostname => Monitor::Config[:mq_server])
       conn.start
     
       ch = conn.create_channel
-      q  = ch.queue(MQQUEUE, :durable => true)
+      q  = ch.queue(Monitor::Config[:mq_queue], :durable => true)
       ch.prefetch(1)
     
       begin
@@ -33,7 +33,7 @@ class Monitor
             data['object'] = nil unless ALLOWED_OBJECTS.include?(data['object'])
 
             unless data['object'].nil? || !File.directory?((File.join(DOWNLOAD_PATH, data['org'])))
-              Chef::Config[:chef_server_url] = CHEF_URL + "/organizations/#{data['org']}"
+              Chef::Config[:chef_server_url] = Monitor::Config[:chef_url] + "/organizations/#{data['org']}"
 
               obj = Monitor::Item.new(data)
               if data['action'] == "DELETE"

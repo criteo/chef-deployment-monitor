@@ -18,12 +18,16 @@
 class Monitor
   class Logmon
 
+    def initialize(config)
+      @config = config
+    end
+
     def run
 
       sink = MarkerFileSink.new
       
       begin
-        File.open(MON_FILE) do |mon|
+        File.open(Monitor::Config[:mon_file]) do |mon|
           mon.extend(File::Tail)
           mon.interval = 5
           mon.backward(1)
@@ -42,7 +46,8 @@ class Monitor
     end
 
     def filter(data)
-      USER_BLACKLIST && (data['user'] =~ USER_BLACKLIST)
+      user_blacklist = Monitor::Config[:user_blacklist]
+      user_blacklist && (data['user'] =~ user_blacklist)
     end
 
     def scan(line)

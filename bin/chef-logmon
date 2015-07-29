@@ -47,11 +47,6 @@ else
   end
 end    
 
-MQSERVER = Monitor::Config[:mq_server]
-MQQUEUE  = Monitor::Config[:mq_queue]
-MON_FILE = Monitor::Config[:mon_file]
-CHEF_URL = Monitor::Config[:chef_url]
-USER_BLACKLIST = Monitor::Config[:user_blacklist]
 LOGMONNAME = %x[hostname]
 DEBUG = debug
 

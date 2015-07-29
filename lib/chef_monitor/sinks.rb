@@ -8,11 +8,11 @@ class Monitor
 
   class RmqSink < Sink
     def initialize
-      @conn = Bunny.new(:hostname => MQSERVER)
+      @conn = Bunny.new(:hostname => Monitor::Config[:mq_server])
       @conn.start
 
       @ch = @conn.create_channel
-      @q  = @ch.queue(MQQUEUE, :durable => true)
+      @q  = @ch.queue(Monitor::Config[:mq_queue], :durable => true)
     end
 
     def receive(data)
