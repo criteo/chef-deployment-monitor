@@ -1,22 +1,22 @@
 
 class Monitor
   class Sink
-    def receive(data)
-      raise "must be implemented by subclass"
+    def receive(_data)
+      fail 'must be implemented by subclass'
     end
   end
 
   class RmqSink < Sink
     def initialize
-      @conn = Bunny.new(:hostname => Monitor::Config[:mq_server])
+      @conn = Bunny.new(hostname: Monitor::Config[:mq_server])
       @conn.start
 
       @ch = @conn.create_channel
-      @q  = @ch.queue(Monitor::Config[:mq_queue], :durable => true)
+      @q  = @ch.queue(Monitor::Config[:mq_queue], durable: true)
     end
 
     def receive(data)
-      @q.publish(data, :persistent => true, :content_type => "application/json")
+      @q.publish(data, persistent: true, content_type: 'application/json')
     end
   end
 

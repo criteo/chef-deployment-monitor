@@ -17,30 +17,28 @@
 
 class Monitor
   class Logmon
-
     def initialize(config)
       @config = config
     end
 
     def run
-
       sink = MarkerFileSink.new
-      
+
       begin
         File.open(Monitor::Config[:mon_file]) do |mon|
           mon.extend(File::Tail)
           mon.interval = 5
           mon.backward(1)
-          mon.tail { |line|
+          mon.tail do |line|
             data = scan(line)
             # skipping the objects 'checksum-.*' and 'reports'
-            unless data.nil? || data['org'].nil? || data['object'] =~  /(^checksum-.*$|^reports$)/
+            unless data.nil? || data['org'].nil? || data['object'] =~ /(^checksum-.*$|^reports$)/
               unless filter(data)
-                Monitor::Log.new(data.to_json, "INFO")
+                Monitor::Log.new(data.to_json, 'INFO')
                 sink.receive(data)
               end
             end
-          }
+          end
         end
       end
     end
@@ -54,18 +52,17 @@ class Monitor
       @regex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - (.{0})- \[([^\]]+?)\]  "(PUT|DELETE|POST) ([^\s]+?) (HTTP\/1\.1)" (\d+) "(.*)" (\d+) "-" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)"/
       if line =~ @regex
         data = {}
-        data['time']    = $3
-        data['user']    = $16
+        data['time']    = Regexp.last_match(3)
+        data['user']    = Regexp.last_match(16)
         data['server']  = LOGMONNAME
-        data['org']     = $5.split('/')[2] unless $5.split('/')[2].nil?
-        data['object']  = $5.split('/')[3] unless $5.split('/')[3].nil?
-        data['name']    = $5.split('/')[4] unless $5.split('/')[4].nil?
-        data['version'] = $5.split('/')[5] unless $5.split('/')[5].nil?
-        data['action']  = $4
+        data['org']     = Regexp.last_match(5).split('/')[2] unless Regexp.last_match(5).split('/')[2].nil?
+        data['object']  = Regexp.last_match(5).split('/')[3] unless Regexp.last_match(5).split('/')[3].nil?
+        data['name']    = Regexp.last_match(5).split('/')[4] unless Regexp.last_match(5).split('/')[4].nil?
+        data['version'] = Regexp.last_match(5).split('/')[5] unless Regexp.last_match(5).split('/')[5].nil?
+        data['action']  = Regexp.last_match(4)
         return data
       end
-      return nil
+      nil
     end
-
   end
 end

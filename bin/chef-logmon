@@ -17,47 +17,46 @@
 # limitations under the License.
 #
 
-require "chef_logmon"
+require 'chef_logmon'
 require 'rubygems'
 require 'file-tail'
 require 'json'
 require 'daemons'
 
-config=nil
-debug=false
+config = nil
+debug = false
 
-opt=0
+opt = 0
 ARGV.each do |arg|
-  config = ARGV[opt+1] if arg == "-C" || arg == "--config"
-  debug = true if arg == "--debug"
-  opt+=1
+  config = ARGV[opt + 1] if arg == '-C' || arg == '--config'
+  debug = true if arg == '--debug'
+  opt += 1
 end
 
 if config.nil?
-  puts "Please enter the configuration file with the option -C or --config"
+  puts 'Please enter the configuration file with the option -C or --config'
   exit 1
 else
   Monitor::Config.from_file(config)
-  [ "mon_file", "chef_url", "pid_dir", "log_dir" ].each do |item|
+  %w(mon_file chef_url pid_dir log_dir).each do |item|
     if Monitor::Config[item.to_sym].empty?
       puts "Missing item: #{item} within the configuration file!"
       exit 1
     end
   end
-end    
+end
 
-LOGMONNAME = %x[hostname]
+LOGMONNAME = `hostname`
 DEBUG = debug
 
 @options = {
-  :log_output => true,
-  :dir_mode => :normal,
-  :dir => Monitor::Config[:pid_dir],
-  :log_dir => Monitor::Config[:log_dir]
+  log_output: true,
+  dir_mode: :normal,
+  dir: Monitor::Config[:pid_dir],
+  log_dir: Monitor::Config[:log_dir]
 }
 
 Daemons.run_proc('chef-logmon', @options) do
   logmon = Monitor::Logmon.new
-  logmon.run()
+  logmon.run
 end
-

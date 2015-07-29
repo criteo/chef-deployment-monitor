@@ -17,21 +17,19 @@
 
 class Monitor
   class Log
-    
-    def initialize(text, type='INFO')
+    def initialize(text, type = 'INFO')
       case type.downcase
-      when "INFO".downcase
-        puts "[" + Time.now.iso8601 + "] INFO: " + text
-      when "WARN".downcase
-        puts "[" + Time.now.iso8601 + "] WARN: " + text
-      when "ERROR".downcase
-        puts "[" + Time.now.iso8601 + "] ERROR: " + text
-      when "DEBUG".downcase
-        puts "[" + Time.now.iso8601 + "] DEBUG: " + text if DEBUG
+      when 'INFO'.downcase
+        puts '[' + Time.now.iso8601 + '] INFO: ' + text
+      when 'WARN'.downcase
+        puts '[' + Time.now.iso8601 + '] WARN: ' + text
+      when 'ERROR'.downcase
+        puts '[' + Time.now.iso8601 + '] ERROR: ' + text
+      when 'DEBUG'.downcase
+        puts '[' + Time.now.iso8601 + '] DEBUG: ' + text if DEBUG
       else
-        puts "[" + Time.now.iso8601 + "] UNKNOWN: " + text
+        puts '[' + Time.now.iso8601 + '] UNKNOWN: ' + text
       end
     end
-
   end
 end
