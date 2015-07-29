@@ -40,12 +40,21 @@ class Monitor
     end
 
     def filter(data)
+      filter_user(data) || filter_action(data)
+    end
+
+    def filter_user(data)
       user_blacklist = Monitor::Config[:user_blacklist]
       user_blacklist && (data['user'] =~ user_blacklist)
     end
 
+    def filter_action(data)
+      action_blacklist = Monitor::Config[:action_blacklist]
+      action_blacklist && (data['action'] =~ action_blacklist)
+    end
+
     def scan(line)
-      @regex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - (.{0})- \[([^\]]+?)\]  "(PUT|DELETE|POST) ([^\s]+?) (HTTP\/1\.1)" (\d+) "(.*)" (\d+) "-" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)"/
+      @regex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - (.{0})- \[([^\]]+?)\]  "(\w+) ([^\s]+?) (HTTP\/1\.1)" (\d+) "(.*)" (\d+) "-" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)"/
       if line =~ @regex
         data = {}
         data['time']    = Regexp.last_match(3)

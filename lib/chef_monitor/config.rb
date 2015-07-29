@@ -23,6 +23,12 @@ class Monitor
     config_strict_mode true
 
     default :marker_file, '/tmp/last_chef_deployment'
-    %w(user_blacklist mon_file log_dir pid_dir).each { |o| configurable o.to_sym }
+    default :action_blacklist, /GET/
+    %w(
+      user_blacklist
+      mon_file
+      log_dir
+      pid_dir
+    ).each { |o| configurable o.to_sym }
   end
 end
