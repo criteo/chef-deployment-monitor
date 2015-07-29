@@ -17,10 +17,6 @@
 
 class Monitor
   class Logmon
-    def initialize(config)
-      @config = config
-    end
-
     def run
       sink = MarkerFileSink.new
 

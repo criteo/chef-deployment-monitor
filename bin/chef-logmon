@@ -38,8 +38,8 @@ if config.nil?
   exit 1
 else
   Monitor::Config.from_file(config)
-  %w(mon_file chef_url pid_dir log_dir).each do |item|
-    if Monitor::Config[item.to_sym].empty?
+  %w(mon_file pid_dir log_dir).each do |item|
+    if (Monitor::Config[item.to_sym] || '').empty?
       puts "Missing item: #{item} within the configuration file!"
       exit 1
     end
