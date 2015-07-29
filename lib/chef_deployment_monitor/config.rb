@@ -17,18 +17,22 @@
 
 require 'mixlib/config'
 
-class Monitor
-  class Config
-    extend Mixlib::Config
-    config_strict_mode true
+class Chef
+  class Deployment
+    class Monitor
+      class Config
+        extend Mixlib::Config
+        config_strict_mode true
 
-    default :marker_file, '/tmp/last_chef_deployment'
-    default :action_blacklist, /GET/
-    %w(
+        default :marker_file, '/tmp/last_chef_deployment'
+        default :action_blacklist, /GET/
+        %w(
       user_blacklist
       mon_file
       log_dir
       pid_dir
-    ).each { |o| configurable o.to_sym }
+        ).each { |o| configurable o.to_sym }
+      end
+    end
   end
 end

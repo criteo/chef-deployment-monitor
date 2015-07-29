@@ -37,9 +37,9 @@ if config.nil?
   puts 'Please enter the configuration file with the option -C or --config'
   exit 1
 else
-  Monitor::Config.from_file(config)
+  Chef::Deployment::Monitor::Config.from_file(config)
   %w(mon_file pid_dir log_dir).each do |item|
-    if (Monitor::Config[item.to_sym] || '').empty?
+    if (Chef::Deployment::Monitor::Config[item.to_sym] || '').empty?
       puts "Missing item: #{item} within the configuration file!"
       exit 1
     end
@@ -52,11 +52,11 @@ DEBUG = debug
 @options = {
   log_output: true,
   dir_mode: :normal,
-  dir: Monitor::Config[:pid_dir],
-  log_dir: Monitor::Config[:log_dir]
+  dir: Chef::Deployment::Monitor::Config[:pid_dir],
+  log_dir: Chef::Deployment::Monitor::Config[:log_dir]
 }
 
 Daemons.run_proc('chef-logmon', @options) do
-  logmon = Monitor::Logmon.new
+  logmon = Chef::Deployment::Monitor::Logmon.new
   logmon.run
 end

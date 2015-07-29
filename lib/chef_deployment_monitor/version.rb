@@ -15,21 +15,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-class Monitor
-  class Log
-    def initialize(text, type = 'INFO')
-      case type.downcase
-      when 'INFO'.downcase
-        puts '[' + Time.now.iso8601 + '] INFO: ' + text
-      when 'WARN'.downcase
-        puts '[' + Time.now.iso8601 + '] WARN: ' + text
-      when 'ERROR'.downcase
-        puts '[' + Time.now.iso8601 + '] ERROR: ' + text
-      when 'DEBUG'.downcase
-        puts '[' + Time.now.iso8601 + '] DEBUG: ' + text if DEBUG
-      else
-        puts '[' + Time.now.iso8601 + '] UNKNOWN: ' + text
-      end
+class Chef
+  class Deployment
+    class Monitor
+      VERSION = '0.1.6'
+      MAJOR, MINOR, TINY = VERSION.split('.')
     end
   end
 end
