@@ -1,4 +1,12 @@
 language: ruby
 rvm:
-  - 1.9.3
-  - 2.2.0
+- 1.9.3
+- 2.2.0
+deploy:
+  provider: rubygems
+  api_key:
+    secure: mqUOkyrmNz2gB58ejdwW25+7XWDm9e2GdiuogdmJ/RcfhyPOjhUqf7DtJIeeNt8MZ21JGZNr079sR7wLHHBFhPAVLI0jxUwyWe9Z20p2OJydqS/gYaAiZykWp8sPbfbwKvmdMNiVPTMmscz/27NALROjpQvKS7t/yhCirBrOVPNsh/8YS94bQbOK6NsxN0l9Xig2Ltq68nDjezCR0fgpGaNnu6XMAz8+uw9H9T20ZeTUhLBKYxx7zgDg56v/GwUW5LD9b/4h/YBF9kqCKiTxZ1xx1sPU+cGXqpKZxGzOzXwCr2OFPD/6d12aMfcQaCIML1AWIrgIR0pYZnzf7Qz4ZkMJv27ZF0RSqG0Asyg41z+pf5EMxHTw43ARnk9f7+TX/LXEIP7LexevGPq6dAOcGYjQtutq5V6iMyU7V2uSDsHX2fAPOI/75IiXDw8l4EedXraFcf0NpfBV0vf0pdePMThjF8dy0BbBbNPZ+ioq6RiMyppJdFtTyViZylOSbNvl6GXBRj9SEYje5cvjTzuXE7YmpCUtPiA46HqEEXqBerlkxHRAZLWZxMKnVD6STCZxkwgH9agJyD0dOaWqnUAkQ23YUa3hjePpp7Fd7PUjK58uxy0C+usZK6GhDa0IfX/Yi3XoWbQOO9jK1bwv2uAGSG0tqFZKcnhBgiFa4b3t1Hc=
+  gem: chef-deployment-monitor
+  on:
+    tags: true
+    repo: kamaradclimber/chef-deployment-monitor
