@@ -3,14 +3,14 @@ $:.push File.expand_path("../lib", __FILE__)
 require "chef_monitor/version"
 
 Gem::Specification.new do |s|
-  s.name              = "chef-monitor"
+  s.name              = "chef-deployment-monitor"
   s.version           = Monitor::VERSION
   s.platform          = Gem::Platform::RUBY
   s.has_rdoc          = false
   s.extra_rdoc_files  = ["LICENSE"]
-  s.authors           = ["Sander Botman"]
-  s.email             = ["sander.botman@gmail.com"]
-  s.homepage          = "https://github.com/schubergphilis/chef-monitor-gem"
+  s.authors           = ["Sander Botman", 'Grégoire Seux']
+  s.email             = ["g.seux@criteo.com"]
+  s.homepage          = "https://github.com/kamaradclimber/chef-deployment-monitor"
   s.summary           = %q{Chef Monitoring tool to monitor all changes made}
   s.description       = s.summary
   s.files             = `git ls-files`.split("\n")
