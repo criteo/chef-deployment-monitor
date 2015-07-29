@@ -20,7 +20,6 @@
 require "chef_logmon"
 require 'rubygems'
 require 'file-tail'
-require 'bunny'
 require 'json'
 require 'daemons'
 

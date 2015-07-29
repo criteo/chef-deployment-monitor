@@ -23,13 +23,8 @@ class Monitor
     extend Mixlib::Config
     config_strict_mode true
 
-    default :chef_url, nil
-    default :download_path, nil
-    default :mq_server,  nil
-    default :node_name, nil
-    default :client_key, nil
     default :marker_file, '/tmp/last_chef_deployment'
-    %w(user_blacklist mon_file mq_queue log_dir pid_dir).each { |o| configurable o.to_sym }
+    %w(user_blacklist mon_file log_dir pid_dir).each { |o| configurable o.to_sym }
 
   end
 end

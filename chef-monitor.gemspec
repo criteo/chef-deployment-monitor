@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.executables       = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths     = ["lib"]
   s.license           = 'Apache 2.0'
-  s.add_dependency "bunny", ">= 1.1.0"
   s.add_dependency "file-tail", ">= 1.0.12"
   s.add_dependency "daemons", ">= 1.1.9"
   s.add_dependency 'mixlib-config'
