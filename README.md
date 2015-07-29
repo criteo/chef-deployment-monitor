@@ -28,3 +28,7 @@ On all your frontend servers:
     chef-logmon run -- -C /opt/chef-monitor/config.rb     #<run interactive>
     chef-logmon start -- -C /opt/chef-monitor/config.rb   #<run as service>
     chef-logmon stop                                      #<stop service>
+
+# Credits
+
+This repo is based on the initial work of @schubergphilis in schubergphilis/chef-monitor-gem
