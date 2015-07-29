@@ -14,7 +14,7 @@ class Chef
         # of last deployement
         def receive(data)
           File.open(Monitor::Config[:marker_file], 'w+') do |f|
-            f.write(data['user'])
+            f.write(data.to_json)
           end
         end
       end
