@@ -15,6 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+require 'date'
+
 class Chef
   class Deployment
     class Monitor
@@ -29,6 +31,7 @@ class Chef
               mon.backward(1)
               mon.tail do |line|
                 data = scan(line)
+                data = format(data)
                 # skipping the objects 'checksum-.*' and 'reports'
                 unless data.nil? || data['org'].nil? || data['object'] =~ /(^checksum-.*$|^reports$)/
                   unless filter(data)
@@ -39,6 +42,13 @@ class Chef
               end
             end
           end
+        end
+
+        def format(data)
+          # convert to timestamp
+          data_dup = data.dup
+          data_dup['time'] = DateTime.strptime(data['time'], '%d/%b/%C:%T %z').to_time.to_i
+          data_dup
         end
 
         def filter(data)
