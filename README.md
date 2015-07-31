@@ -1,6 +1,9 @@
-#CHEF-MONITOR
+#CHEF-DEPLOYMENT-MONITOR
 
-Chef monitor has one executable:
+[![Build Status](https://travis-ci.org/kamaradclimber/chef-deployment-monitor.png?branch=master)](https://travis-ci.org/kamaradclimber/chef-deployment-monitor)
+[![Gem Version](https://badge.fury.io/rb/chef-deployment-monitor.png)](http://badge.fury.io/rb/chef-deployment-monitor)
+
+Chef Deployment Monitor has one executable:
   - chef-logmon         (this will be activated on all frontend servers)
 
 #CHEF-LOGMON:
@@ -29,4 +32,5 @@ On all your frontend servers:
 
 # Credits
 
-This repo is based on the initial work of @schubergphilis in schubergphilis/chef-monitor-gem
+This repo is based on the initial work of [@schubergphilis](https://github.com/schubergphilis) in schubergphilis/chef-monitor-gem.
+Thanks a lot to him!
