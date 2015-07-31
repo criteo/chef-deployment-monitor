@@ -48,6 +48,7 @@ class Chef
           # convert to timestamp
           data_dup = data.dup
           data_dup['time'] = DateTime.strptime(data['time'], '%d/%b/%C:%T %z').to_time.to_i
+          data_dup['server'] = data['server'].strip
           data_dup
         end
 
