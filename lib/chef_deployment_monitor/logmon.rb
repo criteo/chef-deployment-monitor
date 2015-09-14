@@ -31,9 +31,9 @@ class Chef
               mon.backward(1)
               mon.tail do |line|
                 data = scan(line)
-                data = format(data)
                 # skipping the objects 'checksum-.*' and 'reports'
                 unless data.nil? || data['org'].nil? || data['object'] =~ /(^checksum-.*$|^reports$)/
+                  data = format(data)
                   unless filter(data)
                     Monitor::Log.new(data.to_json, 'INFO')
                     sink.receive(data)
