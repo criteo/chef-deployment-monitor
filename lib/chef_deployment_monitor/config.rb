@@ -28,6 +28,7 @@ class Chef
         default :action_blacklist, /GET/
         %w(
       user_blacklist
+      object_blacklist
       mon_file
       log_dir
       pid_dir
