@@ -29,6 +29,7 @@ class Chef
         %w(
       user_blacklist
       object_blacklist
+      org_blacklist
       mon_file
       log_dir
       pid_dir

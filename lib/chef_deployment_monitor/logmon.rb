@@ -53,7 +53,7 @@ class Chef
         end
 
         def filter(data)
-          filter_user(data) || filter_action(data) || filter_object(data)
+          filter_user(data) || filter_action(data) || filter_object(data) || filter_org(data)
         end
 
         def filter_user(data)
@@ -64,6 +64,11 @@ class Chef
         def filter_object(data)
           object_blacklist = Monitor::Config[:object_blacklist]
           object_blacklist && (data['object'] =~ object_blacklist)
+        end
+
+        def filter_org(data)
+          org_blacklist = Monitor::Config[:org_blacklist]
+          org_blacklist && (data['org'] =~ org_blacklist)
         end
 
         def filter_action(data)
