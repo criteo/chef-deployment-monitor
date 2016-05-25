@@ -18,7 +18,7 @@
 class Chef
   class Deployment
     class Monitor
-      VERSION = '0.4.0'
+      VERSION = '0.5.0'
       MAJOR, MINOR, TINY = VERSION.split('.')
     end
   end
