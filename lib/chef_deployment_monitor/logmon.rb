@@ -58,7 +58,7 @@ class Chef
           md5 = Digest::MD5.new
           md5.update data.to_s
           data = data.dup
-          data['digest'] = md5.digest
+          data['digest'] = md5.hexdigest
           data
         end
 
