@@ -16,6 +16,7 @@
 # limitations under the License.
 
 require 'date'
+require 'digest'
 
 class Chef
   class Deployment
@@ -36,6 +37,7 @@ class Chef
                   data = format(data)
                   unless filter(data)
                     Monitor::Log.new(data.to_json, 'INFO')
+                    data = digest(data)
                     sink.receive(data)
                   end
                 end
@@ -50,6 +52,14 @@ class Chef
           data_dup['time'] = DateTime.strptime(data['time'], '%d/%b/%C:%T %z').to_time.to_i
           data_dup['server'] = data['server'].strip
           data_dup
+        end
+
+        def digest(data)
+          md5 = Digest::MD5.new
+          md5.update data.to_s
+          data = data.dup
+          data['digest'] = md5.digest
+          data
         end
 
         def filter(data)
