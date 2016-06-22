@@ -24,7 +24,7 @@ class Chef
         extend Mixlib::Config
         config_strict_mode true
 
-        default :blacklisted?, Proc.new { |data| false }
+        default :blacklisted?, Proc.new { |data| false } # rubocop:disable Lint/UnusedBlockArgument:
         default :marker_file, '/tmp/last_chef_deployment'
         %w(
       mon_file
