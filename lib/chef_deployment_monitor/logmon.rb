@@ -63,27 +63,7 @@ class Chef
         end
 
         def filter(data)
-          filter_user(data) || filter_action(data) || filter_object(data) || filter_org(data)
-        end
-
-        def filter_user(data)
-          user_blacklist = Monitor::Config[:user_blacklist]
-          user_blacklist && (data['user'] =~ user_blacklist)
-        end
-
-        def filter_object(data)
-          object_blacklist = Monitor::Config[:object_blacklist]
-          object_blacklist && (data['object'] =~ object_blacklist)
-        end
-
-        def filter_org(data)
-          org_blacklist = Monitor::Config[:org_blacklist]
-          org_blacklist && (data['org'] =~ org_blacklist)
-        end
-
-        def filter_action(data)
-          action_blacklist = Monitor::Config[:action_blacklist]
-          action_blacklist && (data['action'] =~ action_blacklist)
+          Monitor::Config[:blacklisted?].call(data)
         end
 
         def scan(line)

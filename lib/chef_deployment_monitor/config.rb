@@ -24,12 +24,9 @@ class Chef
         extend Mixlib::Config
         config_strict_mode true
 
+        default :blacklisted?, Proc.new { |data| false }
         default :marker_file, '/tmp/last_chef_deployment'
-        default :action_blacklist, /GET/
         %w(
-      user_blacklist
-      object_blacklist
-      org_blacklist
       mon_file
       log_dir
       pid_dir
