@@ -23,7 +23,7 @@ class Chef
     class Monitor
       class Logmon
         def run
-          sink = MarkerFileSink.new
+          sinks = [MarkerFileSink.new, HistoryFile.new]
 
           begin
             File.open(Monitor::Config[:mon_file]) do |mon|
@@ -38,7 +38,7 @@ class Chef
                   unless filter(data)
                     Monitor::Log.new(data.to_json, 'INFO')
                     data = digest(data)
-                    sink.receive(data)
+                    sinks.each { |sink| sink.receive(data) }
                   end
                 end
               end

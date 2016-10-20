@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'file-tail', '>= 1.0.12'
   s.add_dependency 'daemons', '>= 1.1.9'
   s.add_dependency 'mixlib-config'
+  s.add_dependency 'json'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rubocop'

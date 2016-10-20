@@ -18,6 +18,24 @@ class Chef
           end
         end
       end
+      class HistoryFileSink < Sink
+        require 'json'
+        # will append data to the history file
+        # within 5 seconds of last deployment
+        # the array is a FIFO
+        def receive(data)
+          file = Monitor::Config[:history_file]
+          history = if File.exist?(file)
+                      JSON.parse(File.read(file)) rescue []
+                    else
+                      []
+                    end
+          history = history.take(Monitor::Config[:history_file_size] - 1)
+          history = [data] + history
+
+          File.write(file, history.to_json)
+        end
+      end
     end
   end
 end

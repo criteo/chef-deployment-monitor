@@ -26,6 +26,8 @@ class Chef
 
         default :blacklisted?, Proc.new { |data| false } # rubocop:disable Lint/UnusedBlockArgument:
         default :marker_file, '/tmp/last_chef_deployment'
+        default :history_file, '/tmp/lasts_chef_deployment'
+        default :history_file_size, 1000
         %w(
       mon_file
       log_dir
