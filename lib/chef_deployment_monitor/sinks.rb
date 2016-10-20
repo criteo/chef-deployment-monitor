@@ -20,18 +20,23 @@ class Chef
       end
       class HistoryFileSink < Sink
         require 'json'
+
+        attr_reader :file
+
+        def initialize
+          @file    = Monitor::Config[:history_file]
+          @history = if File.exist?(file)
+                       JSON.parse(File.read(file)) rescue []
+                     else
+                       []
+                     end
+        end
+
         # will append data to the history file
         # within 5 seconds of last deployment
         # the array is a FIFO
         def receive(data)
-          file = Monitor::Config[:history_file]
-          history = if File.exist?(file)
-                      JSON.parse(File.read(file)) rescue []
-                    else
-                      []
-                    end
-          history = history.take(Monitor::Config[:history_file_size] - 1)
-          history = [data] + history
+          history = [data] + history.take(Monitor::Config[:history_file_size] - 1)
 
           File.write(file, history.to_json)
         end
