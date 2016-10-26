@@ -23,7 +23,7 @@ class Chef
     class Monitor
       class Logmon
         def run
-          sinks = [MarkerFileSink.new, HistoryFile.new]
+          sinks = [MarkerFileSink.new, HistoryFileSink.new]
 
           begin
             File.open(Monitor::Config[:mon_file]) do |mon|
