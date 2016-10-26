@@ -36,9 +36,9 @@ class Chef
         # within 5 seconds of last deployment
         # the array is a FIFO
         def receive(data)
-          history = [data] + history.take(Monitor::Config[:history_file_size] - 1)
+          @history = [data] + @history.take(Monitor::Config[:history_file_size] - 1)
 
-          File.write(file, history.to_json)
+          File.write(file, @history.to_json)
         end
       end
     end
