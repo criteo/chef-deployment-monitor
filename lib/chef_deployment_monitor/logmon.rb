@@ -69,6 +69,7 @@ class Chef
         def scan(line)
           @regex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - (.{0})- \[([^\]]+?)\]  "(\w+) ([^\s]+?) (HTTP\/1\.1)" (\d+) "(.*)" (\d+) "-" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)"/
           if line =~ @regex
+            return nil if Regexp.last_match(7).to_i == 403 # forbidden request do not count
             data = {}
             data['time']    = Regexp.last_match(3)
             data['user']    = Regexp.last_match(16)
