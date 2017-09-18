@@ -9,11 +9,17 @@ class Chef
       end
 
       class MarkerFileSink < Sink
+        attr_reader :file
+
+        def initialize(outfile)
+          @file    = outfile
+        end
+
         # will modify the marker file
         # last write data of marker file will be within 5 seconds
         # of last deployement
         def receive(data)
-          File.open(Monitor::Config[:marker_file], 'w+') do |f|
+          File.open(file, 'w+') do |f|
             f.write(data.to_json)
           end
         end
@@ -23,10 +29,10 @@ class Chef
 
         attr_reader :file
 
-        def initialize
-          @file    = Monitor::Config[:history_file]
+        def initialize(outfile)
+          @file    = outfile
           @history = if File.exist?(file)
-                       JSON.parse(File.read(file)) rescue []
+                       JSON.parse(File.read(file)) rescue [] # rubocop:disable Lint/RescueWithoutErrorClass
                      else
                        []
                      end
