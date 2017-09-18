@@ -22,9 +22,10 @@ class Chef
   class Deployment
     class Monitor
       class Logmon
+        def initialize
+          @sinks = { }
+        end
         def run
-          sinks = [MarkerFileSink.new, HistoryFileSink.new]
-
           begin
             File.open(Monitor::Config[:mon_file]) do |mon|
               mon.extend(File::Tail)
@@ -38,12 +39,23 @@ class Chef
                   unless filter(data)
                     Monitor::Log.new(data.to_json, 'INFO')
                     data = digest(data)
-                    sinks.each { |sink| sink.receive(data) }
+                    sinks(data).each { |sink| sink.receive(data) }
                   end
                 end
               end
             end
           end
+        end
+
+        def sinks(data)
+          route = Monitor::Config[:route].call(data)
+          unless @sinks.has_key? route
+            @sinks[route] = [MarkerFileSink.new(::File.join(Monitor::Config[:output_file_directory],
+                                                            Monitor::Config[:marker_file_template] % route)),
+                             HistoryFileSink.new(::File.join(Monitor::Config[:output_file_directory],
+                                                             Monitor::Config[:history_file_template] % route))]
+          end
+          @sinks[route]
         end
 
         def format(data)
