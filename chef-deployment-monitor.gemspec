@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
-require 'chef_deployment_monitor/version'
 
 Gem::Specification.new do |s|
   s.name              = 'chef-deployment-monitor'
-  s.version           = Chef::Deployment::Monitor::VERSION
+  s.version           = '1.2.0'
   s.platform          = Gem::Platform::RUBY
   s.has_rdoc          = false
   s.extra_rdoc_files  = ['LICENSE']
