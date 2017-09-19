@@ -3,7 +3,7 @@ $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name              = 'chef-deployment-monitor'
-  s.version           = '1.2.1'
+  s.version           = '1.2.2'
   s.platform          = Gem::Platform::RUBY
   s.has_rdoc          = false
   s.extra_rdoc_files  = ['LICENSE']
