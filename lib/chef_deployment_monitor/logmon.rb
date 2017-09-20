@@ -89,7 +89,12 @@ class Chef
             data['org']     = Regexp.last_match(5).split('/')[2] unless Regexp.last_match(5).split('/')[2].nil?
             data['object']  = Regexp.last_match(5).split('/')[3] unless Regexp.last_match(5).split('/')[3].nil?
             data['name']    = Regexp.last_match(5).split('/')[4] unless Regexp.last_match(5).split('/')[4].nil?
-            data['version'] = Regexp.last_match(5).split('/')[5] unless Regexp.last_match(5).split('/')[5].nil?
+            if Regexp.last_match(5).split('/')[3] == 'policy_groups'
+              data['subobject'] = Regexp.last_match(5).split('/')[5] unless Regexp.last_match(5).split('/')[5].nil?
+              data['subname']   = Regexp.last_match(5).split('/')[6] unless Regexp.last_match(5).split('/')[6].nil?
+            else
+              data['version'] = Regexp.last_match(5).split('/')[5] unless Regexp.last_match(5).split('/')[5].nil?
+            end
             data['action']  = Regexp.last_match(4)
             return data
           end
