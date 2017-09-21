@@ -19,3 +19,5 @@ require 'chef_deployment_monitor/log'
 require 'chef_deployment_monitor/config'
 require 'chef_deployment_monitor/sinks'
 require 'chef_deployment_monitor/logmon'
+
+require 'chef_api_monkey_patch'
