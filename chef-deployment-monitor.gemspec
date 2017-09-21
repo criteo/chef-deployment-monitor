@@ -3,7 +3,7 @@ $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name              = 'chef-deployment-monitor'
-  s.version           = '1.2.3'
+  s.version           = '1.2.4'
   s.platform          = Gem::Platform::RUBY
   s.has_rdoc          = false
   s.extra_rdoc_files  = ['LICENSE']
@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'daemons', '>= 1.1.9'
   s.add_dependency 'mixlib-config'
   s.add_dependency 'json'
+  s.add_dependency 'chef-api', '>= 0.7.1'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rubocop'
