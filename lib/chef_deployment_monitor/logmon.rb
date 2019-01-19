@@ -78,6 +78,22 @@ class Chef
           Monitor::Config[:blacklisted?].call(data)
         end
 
+        def extract_query_string(url)
+          return unless url
+
+          query_string = url.split('?', 2)[1]
+          return unless query_string
+
+          result = {}
+          query_string.split('&').each do |value|
+            segments = value.split('=', 2)
+            next if segments[0].nil? || segments[0].empty?
+
+            result[segments[0]] = segments[1]
+          end
+          result
+        end
+
         def scan(line)
           @regex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - (.{0})- \[([^\]]+?)\]  "(\w+) ([^\s]+?) (HTTP\/1\.1)" (\d+) "(.*)" (\d+) "-" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)" "(.*)"/
           if line =~ @regex
@@ -89,6 +105,7 @@ class Chef
             data['org']     = Regexp.last_match(5).split('/')[2] unless Regexp.last_match(5).split('/')[2].nil?
             data['object']  = Regexp.last_match(5).split('/')[3] unless Regexp.last_match(5).split('/')[3].nil?
             data['name']    = Regexp.last_match(5).split('/')[4] unless Regexp.last_match(5).split('/')[4].nil?
+            data['query']   = extract_query_string(Regexp.last_match(5))
             if Regexp.last_match(5).split('/')[3] == 'policy_groups'
               data['subobject'] = Regexp.last_match(5).split('/')[5] unless Regexp.last_match(5).split('/')[5].nil?
               data['subname']   = Regexp.last_match(5).split('/')[6] unless Regexp.last_match(5).split('/')[6].nil?
